@@ -1,16 +1,100 @@
-# flutter_clean_architecture_sample
+### 📚 **GitHub 사용자 검색 및 저장소 리스트 앱 (Clean Architecture and BLoC with Paging Mediator)**
 
-A new Flutter project.
+이 프로젝트는 **GitHub API**와 **Clean Architecture**를 기반으로 하여 **Flutter** 프레임워크에서 **사용자 목록과 저장소 리스트**를 검색하는 기능을 구현했습니다. 특히 **Paging Mediator 패턴**을 적용해 대량의 데이터를 효율적으로 관리하며, **BLoC** 및 **Riverpod**를 활용하여 상태 관리를 최적화했습니다.
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+### **주요 기능 ✨**
 
-A few resources to get you started if this is your first Flutter project:
+1. **GitHub 사용자 목록 검색 및 무한 스크롤 🌐**
+    - GitHub API를 통해 실시간으로 사용자 목록을 검색하고, 각 사용자의 **아바타**와 **이름**을 표시합니다.
+    - 페이징 처리를 통해 **무한 스크롤** 기능을 구현했습니다.
+    - **Mediator 패턴**을 적용하여 API 요청 및 UI 갱신을 관리하여 데이터 간 일관성을 보장하고, 네트워크 연결 상태에 관계없이 스크롤 성능을 최적화했습니다.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+2. **광고 배너 표시 및 클릭 이벤트 🎯**
+    - 사용자 목록 중 10번째, 20번째, 30번째 항목마다 **광고 배너**가 표시되며, 사용자가 클릭하면 외부 링크로 이동합니다.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+3. **특정 사용자의 저장소 목록 🔍**
+    - 선택한 사용자의 GitHub 저장소 목록을 표시하며, 저장소의 **이름**, **설명**, **별 수**, **언어** 등의 정보를 제공합니다.
+
+4. **페이징 처리 및 캐싱 🔄**
+    - **SQLite**를 사용하여 사용자 목록 및 저장소 데이터를 로컬에 저장하고, API 요청 실패 시 캐시된 데이터를 불러옵니다.
+    - **Mediator** 기능을 사용해 데이터 소스(원격 및 로컬)를 결합하여 페이징 처리를 개선하였습니다.
+
+5. **상태 관리 🧠**
+    - **BLoC** 패턴을 사용하여 명확한 상태 흐름을 관리하고, **Riverpod**을 사용해 전역 상태 관리를 효율적으로 구현했습니다.
+
+6. **테스트 전략 🧪**
+    - **JUnit**과 **Mockito**를 사용하여 로컬 및 원격 데이터 소스의 유닛 테스트를 수행했습니다.
+    - 주요 비즈니스 로직에 대한 테스트를 작성하여 예기치 못한 오류를 방지합니다.
+
+---
+
+### **기술 스택 🛠️**
+- **언어**: Dart
+- **프레임워크**: Flutter
+- **상태 관리**: BLoC, Riverpod
+- **로컬 데이터베이스**: SQLite
+- **네트워크 통신**: Dio
+- **페이징**: Paging 3 (with Mediator)
+- **테스트**: JUnit, Mockito
+
+---
+
+### **Mediator 패턴 적용 🚀**
+
+**Paging Mediator**는 원격 데이터와 로컬 캐싱 데이터를 결합하여 대량의 데이터를 효율적으로 로드하는 방식입니다. 이는 페이징 처리에서 데이터의 일관성을 유지하며, 네트워크 연결 상태에 관계없이 무한 스크롤을 가능하게 합니다. 또한, 로컬 데이터가 충분하지 않을 경우 원격 데이터를 요청하여 중복된 요청을 방지하고, 데이터 로딩 성능을 최적화합니다.
+
+---
+
+### **Clean Architecture 적용 🎯**
+
+이 프로젝트는 **Clean Architecture** 원칙에 따라 설계되어, 유지보수성과 확장성을 고려한 구조를 갖추고 있습니다. 다음과 같은 세 가지 레이어로 나누어 설계되었습니다.
+
+- **Data Layer**: 데이터 소스를 관리하는 레이어로, 로컬 데이터베이스(**SQLite**)와 원격 데이터 소스(**GitHub API**)를 통합합니다.
+- **Domain Layer**: 애플리케이션의 비즈니스 로직을 담고 있으며, 데이터 처리의 복잡성을 감추고 단순화된 인터페이스를 제공합니다.
+- **Presentation Layer**: UI와 상태 관리를 담당하는 레이어로, **BLoC** 패턴을 사용하여 데이터와 UI 간의 상호작용을 관리합니다.
+
+---
+
+### **프로젝트 구조 🗂️**
+
+```
+lib/
+├── data/
+│   ├── constants/    # 상수 정의
+│   ├── model/        # 데이터 모델 정의
+│   ├── repository/   # 레포지토리 구현
+│   ├── source/
+│   │   ├── local/    # 로컬 데이터 소스 (SQLite)
+│   │   └── remote/   # 원격 데이터 소스 (GitHub API)
+├── presentation/
+│   ├── bloc/         # 상태 관리 로직
+│   ├── screens/      # UI 화면
+│   └── widgets/      # 재사용 가능한 위젯
+└── main.dart         # 앱 진입점
+```
+
+- **Data Layer**: 원격 및 로컬 데이터 소스에서 데이터를 가져와 캐싱 및 페이징 처리.
+- **Domain Layer**: 사용자 및 저장소 데이터를 비즈니스 로직을 통해 처리.
+- **Presentation Layer**: BLoC 패턴을 통해 UI와 비즈니스 로직을 분리하여 구현.
+
+---
+
+### **상태 관리 패턴 선택 이유 🎯**
+
+1. **BLoC**: 명확한 데이터 흐름과 상태 변화를 관리하는 데 적합하며, 예측 가능한 상태 관리를 제공합니다.
+2. **Riverpod**: 프로젝트의 전역 상태 관리와 전반적인 상태 관리의 간결함을 보장합니다.
+
+---
+
+### **README 작성 시 포함 사항**:
+
+- 프로젝트 실행 방법
+- **BLoC**와 **Riverpod**을 통한 상태 관리 설명
+- GitHub API 호출 방법 및 페이징 처리
+- 로컬 캐싱과 **Paging Mediator**의 적용 방식
+
+---
+
+이 프로젝트는 **GitHub 사용자 목록**과 **저장소 리스트** 기능을 중심으로 **Clean Architecture**와 **Paging Mediator 패턴**을 적용하여, 확장성 있는 구조를 구현한 샘플 애플리케이션입니다.
