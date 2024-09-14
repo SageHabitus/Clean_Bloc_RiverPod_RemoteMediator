@@ -60,16 +60,16 @@
 ```
 lib/
 ├── data/
-│   ├── constants/    # 상수 정의
+│   ├── constants/    
 │   ├── model/        # 데이터 모델 정의
 │   ├── repository/   # 레포지토리 구현
 │   ├── source/
 │   │   ├── local/    # 로컬 데이터 소스 (SQLite)
 │   │   └── remote/   # 원격 데이터 소스 (GitHub API)
 ├── presentation/
-│   ├── bloc/         # 상태 관리 로직
-│   ├── screens/      # UI 화면
-│   └── widgets/      # 재사용 가능한 위젯
+│   ├── bloc/         
+│   ├── screens/      
+│   └── widgets/      
 └── main.dart         # 앱 진입점
 ```
 
