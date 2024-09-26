@@ -39,7 +39,7 @@
 
 ---
 
-### **Clean Architecture 적용 🚀**
+### **Google Architecture 적용 🚀**
 
 이 프로젝트는 **Clean Architecture** 패턴을 적용하여 각각의 책임 영역을 분리하고, 유지보수와 확장성을 극대화했습니다.
 
